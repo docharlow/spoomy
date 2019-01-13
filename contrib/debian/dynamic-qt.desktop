@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Spoomy
+Comment=Spoomy P2P Cryptocurrency
+Comment[fr]=Spoomy, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Spoomy, eşten eşe kriptografik sanal para birimi
+Exec=spoomy-qt %u
+Terminal=false
+Type=Application
+Icon=zumy128
+MimeType=x-scheme-handler/spoomy;
+Categories=Office;Finance;
