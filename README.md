@@ -41,9 +41,9 @@ Minimum TX Fee: 0.0001 SPY
 
 PoW Mining Algorithm: Argon2d
 
-RPC port: 31051
+RPC port: 32253
 
-Port: 32000
+Port: 31111
 
 A newly launching ecosystem with a decentralized, all in one financial exchange and development Services ecosystem. Ever evolving in creating a safe haven for all creators online and offline.
 
@@ -58,9 +58,9 @@ Spoomy implements Gavin Andresens signature cache optimisation from Bitcoin for 
 Utilisation of InstantSend for near-instant transactions and PrivateSend for anonymous transactions.
 
 **MainNet Parameters**
-P2P Port = 32000
-RPC Port = 31051
-Masternodes = 32000
+P2P Port = 31111
+RPC Port = 32253
+Masternodes = 31111
 
 
 UNIX BUILD NOTES
