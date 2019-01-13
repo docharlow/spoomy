@@ -12,7 +12,7 @@
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between spoomy-cli and zumyd)
+ * CBaseChainParams defines the base parameters (shared between spoomy-cli and spoomyd)
  * of a given instance of the Spoomy system.
  */
 class CBaseChainParams

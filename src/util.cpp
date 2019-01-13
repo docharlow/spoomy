@@ -107,7 +107,7 @@ bool fLiteMode = false;
 int nWalletBackups = 10;
 
 const char * const ZUMY_CONF_FILENAME = "spoomy.conf";
-const char * const ZUMY_PID_FILENAME = "zumyd.pid";
+const char * const ZUMY_PID_FILENAME = "spoomyd.pid";
 
 std::map<std::string, std::string> mapArgs;
 std::map<std::string, std::vector<std::string> > mapMultiArgs;

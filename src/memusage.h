@@ -42,7 +42,7 @@ static inline size_t SpoomyUsage(const double& v) { return 0; }
 template<typename X> static inline size_t SpoomyUsage(X * const &v) { return 0; }
 template<typename X> static inline size_t SpoomyUsage(const X * const &v) { return 0; }
 
-/** Compute the memory used for zumyally allocated but owned data structures.
+/** Compute the memory used for spoomyally allocated but owned data structures.
  *  For generic data types, this is *not* recursive. SpoomyUsage(vector<vector<int> >)
  *  will compute the memory used for the vector<int>'s, but not for the ints inside.
  *  This is for efficiency reasons, as these functions are intended to be fast. If

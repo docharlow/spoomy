@@ -1,7 +1,7 @@
-TESTS += test/test_zumy
-bin_PROGRAMS += test/test_zumy
+TESTS += test/test_spoomy
+bin_PROGRAMS += test/test_spoomy
 TEST_SRCDIR = test
-TEST_BINARY=test/test_zumy$(EXEEXT)
+TEST_BINARY=test/test_spoomy$(EXEEXT)
 
 
 EXTRA_DIST += \
@@ -83,8 +83,8 @@ ZUMY_TESTS =\
   test/sigopcount_tests.cpp \
   test/skiplist_tests.cpp \
   test/streams_tests.cpp \
-  test/test_zumy.cpp \
-  test/test_zumy.h \
+  test/test_spoomy.cpp \
+  test/test_spoomy.h \
   test/test_random.h \
   test/timedata_tests.cpp \
   test/transaction_tests.cpp \
@@ -101,23 +101,23 @@ ZUMY_TESTS += \
   test/rpc_wallet_tests.cpp
 endif
 
-test_test_zumy_SOURCES = $(ZUMY_TESTS) $(JSON_TEST_FILES) $(RAW_TEST_FILES)
-test_test_zumy_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES) -I$(builddir)/test/ $(TESTDEFS) $(EVENT_CFLAGS)
-test_test_zumy_LDADD = $(LIBZUMY_SERVER) $(LIBZUMY_CLI) $(LIBZUMY_COMMON) $(LIBZUMY_UTIL) $(LIBZUMY_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) \
+test_test_spoomy_SOURCES = $(ZUMY_TESTS) $(JSON_TEST_FILES) $(RAW_TEST_FILES)
+test_test_spoomy_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES) -I$(builddir)/test/ $(TESTDEFS) $(EVENT_CFLAGS)
+test_test_spoomy_LDADD = $(LIBZUMY_SERVER) $(LIBZUMY_CLI) $(LIBZUMY_COMMON) $(LIBZUMY_UTIL) $(LIBZUMY_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) \
   $(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB) $(LIBSECP256K1)
-test_test_zumy_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+test_test_spoomy_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 if ENABLE_WALLET
-test_test_zumy_LDADD += $(LIBZUMY_WALLET)
+test_test_spoomy_LDADD += $(LIBZUMY_WALLET)
 endif
 
-test_test_zumy_LDADD += $(LIBZUMY_CONSENSUS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
-test_test_zumy_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) -static
+test_test_spoomy_LDADD += $(LIBZUMY_CONSENSUS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+test_test_spoomy_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) -static
 
 if ENABLE_ZMQ
-test_test_zumy_LDADD += $(ZMQ_LIBS)
+test_test_spoomy_LDADD += $(ZMQ_LIBS)
 endif
 
-nodist_test_test_zumy_SOURCES = $(GENERATED_TEST_FILES)
+nodist_test_test_spoomy_SOURCES = $(GENERATED_TEST_FILES)
 
 $(ZUMY_TESTS): $(GENERATED_TEST_FILES)
 
@@ -125,13 +125,13 @@ CLEAN_ZUMY_TEST = test/*.gcda test/*.gcno $(GENERATED_TEST_FILES)
 
 CLEANFILES += $(CLEAN_ZUMY_TEST)
 
-zumy_test: $(TEST_BINARY)
+spoomy_test: $(TEST_BINARY)
 
-zumy_test_check: $(TEST_BINARY) FORCE
+spoomy_test_check: $(TEST_BINARY) FORCE
 	$(MAKE) check-TESTS TESTS=$^
 
-zumy_test_clean : FORCE
-	rm -f $(CLEAN_ZUMY_TEST) $(test_test_zumy_OBJECTS) $(TEST_BINARY)
+spoomy_test_clean : FORCE
+	rm -f $(CLEAN_ZUMY_TEST) $(test_test_spoomy_OBJECTS) $(TEST_BINARY)
 
 check-local:
 	@echo "Running test/spoomy-util-test.py..."

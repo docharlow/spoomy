@@ -87,7 +87,7 @@ bool AppInit(int argc, char* argv[])
         else
         {
             strUsage += "\n" + _("Usage:") + "\n" +
-                  "  zumyd [options]                     " + _("Start Spoomy Daemon") + "\n";
+                  "  spoomyd [options]                     " + _("Start Spoomy Daemon") + "\n";
 
             strUsage += "\n" + HelpMessage(HMM_ZUMYD);
         }
@@ -133,7 +133,7 @@ bool AppInit(int argc, char* argv[])
 
         if (fCommandLine)
         {
-            fprintf(stderr, "Error: There is no RPC client functionality in zumyd anymore. Use the spoomy-cli utility instead.\n");
+            fprintf(stderr, "Error: There is no RPC client functionality in spoomyd anymore. Use the spoomy-cli utility instead.\n");
             exit(EXIT_FAILURE);
         }
 #ifndef WIN32
@@ -191,7 +191,7 @@ int main(int argc, char* argv[])
 {
     SetupEnvironment();
 
-    // Connect zumyd signal handlers
+    // Connect spoomyd signal handlers
     noui_connect();
 
     return (AppInit(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE);

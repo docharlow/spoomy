@@ -13,7 +13,7 @@
 
 /**
  * Name of client reported in the 'version' message. Report the same name
- * for both zumyd and spoomy-qt, to make it harder for attackers to
+ * for both spoomyd and spoomy-qt, to make it harder for attackers to
  * target servers or GUI users specifically.
  */
 const std::string CLIENT_NAME("Spoomy");

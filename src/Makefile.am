@@ -12,13 +12,13 @@ ZUMY_INCLUDES=-I$(builddir) -I$(builddir)/obj $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLA
 ZUMY_INCLUDES += -I$(srcdir)/secp256k1/include
 ZUMY_INCLUDES += -I$(srcdir)/univalue/include
 
-LIBZUMY_SERVER=libzumy_server.a
-LIBZUMY_WALLET=libzumy_wallet.a
-LIBZUMY_COMMON=libzumy_common.a
-LIBZUMY_CLI=libzumy_cli.a
-LIBZUMY_UTIL=libzumy_util.a
-LIBZUMY_CRYPTO=crypto/libzumy_crypto.a
-LIBZUMYQT=qt/libzumyqt.a
+LIBZUMY_SERVER=libspoomy_server.a
+LIBZUMY_WALLET=libspoomy_wallet.a
+LIBZUMY_COMMON=libspoomy_common.a
+LIBZUMY_CLI=libspoomy_cli.a
+LIBZUMY_UTIL=libspoomy_util.a
+LIBZUMY_CRYPTO=crypto/libspoomy_crypto.a
+LIBZUMYQT=qt/libspoomyqt.a
 LIBSECP256K1=secp256k1/libsecp256k1.la
 LIBUNIVALUE=univalue/libunivalue.la
 
@@ -31,22 +31,22 @@ $(LIBUNIVALUE): $(wildcard univalue/lib/*) $(wildcard univalue/include/*)
 # Make is not made aware of per-object dependencies to avoid limiting building parallelization
 # But to build the less dependent modules first, we manually select their order here:
 EXTRA_LIBRARIES += \
-  crypto/libzumy_crypto.a \
-  libzumy_util.a \
-  libzumy_common.a \
-  libzumy_server.a \
-  libzumy_cli.a
+  crypto/libspoomy_crypto.a \
+  libspoomy_util.a \
+  libspoomy_common.a \
+  libspoomy_server.a \
+  libspoomy_cli.a
 if ENABLE_WALLET
 ZUMY_INCLUDES += $(BDB_CPPFLAGS)
-EXTRA_LIBRARIES += libzumy_wallet.a
+EXTRA_LIBRARIES += libspoomy_wallet.a
 endif
 if ENABLE_ZMQ
-EXTRA_LIBRARIES += libzumy_zmq.a
+EXTRA_LIBRARIES += libspoomy_zmq.a
 endif
 
 if BUILD_ZUMY_LIBS
-lib_LTLIBRARIES = libzumyconsensus.la
-LIBZUMY_CONSENSUS=libzumyconsensus.la
+lib_LTLIBRARIES = libspoomyconsensus.la
+LIBZUMY_CONSENSUS=libspoomyconsensus.la
 else
 LIBZUMY_CONSENSUS=
 endif
@@ -56,7 +56,7 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_ZUMYD
-  bin_PROGRAMS += zumyd
+  bin_PROGRAMS += spoomyd
 endif
 
 if BUILD_ZUMY_UTILS
@@ -194,12 +194,12 @@ obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
 	@$(top_srcdir)/share/genbuild.sh $(abs_top_builddir)/src/obj/build.h \
 	  $(abs_top_srcdir)
-libzumy_util_a-clientversion.$(OBJEXT): obj/build.h
+libspoomy_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between zumyd and spoomy-qt
-libzumy_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
-libzumy_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libzumy_server_a_SOURCES = \
+# server: shared between spoomyd and spoomy-qt
+libspoomy_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
+libspoomy_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libspoomy_server_a_SOURCES = \
   addrman.cpp \
   alert.cpp \
   bloom.cpp \
@@ -245,22 +245,22 @@ libzumy_server_a_SOURCES = \
   $(ZUMY_CORE_H)
 
 if ENABLE_ZMQ
-LIBZUMY_ZMQ=libzumy_zmq.a
+LIBZUMY_ZMQ=libspoomy_zmq.a
 
-libzumy_zmq_a_CPPFLAGS = $(ZUMY_INCLUDES) $(ZMQ_CFLAGS)
-libzumy_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libzumy_zmq_a_SOURCES = \
+libspoomy_zmq_a_CPPFLAGS = $(ZUMY_INCLUDES) $(ZMQ_CFLAGS)
+libspoomy_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libspoomy_zmq_a_SOURCES = \
   zmq/zmqabstractnotifier.cpp \
   zmq/zmqnotificationinterface.cpp \
   zmq/zmqpublishnotifier.cpp
 endif
 
 
-# wallet: shared between zumyd and spoomy-qt, but only linked
+# wallet: shared between spoomyd and spoomy-qt, but only linked
 # when wallet enabled
-libzumy_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
-libzumy_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libzumy_wallet_a_SOURCES = \
+libspoomy_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
+libspoomy_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libspoomy_wallet_a_SOURCES = \
   activemasternode.cpp \
   masternode.cpp \
   masternode-payments.cpp \
@@ -283,9 +283,9 @@ libzumy_wallet_a_SOURCES = \
   $(ZUMY_CORE_H)
 
 # crypto primitives library
-crypto_libzumy_crypto_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_CONFIG_INCLUDES) $(PIC_FLAGS)
-crypto_libzumy_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
-crypto_libzumy_crypto_a_SOURCES = \
+crypto_libspoomy_crypto_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_CONFIG_INCLUDES) $(PIC_FLAGS)
+crypto_libspoomy_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
+crypto_libspoomy_crypto_a_SOURCES = \
   crypto/common.h \
   crypto/argon2d/argon2.h \
   crypto/argon2d/core.h \
@@ -315,10 +315,10 @@ crypto_libzumy_crypto_a_SOURCES = \
   crypto/sha512.cpp \
   crypto/sha512.h
 
-# common: shared between zumyd, and spoomy-qt and non-server tools
-libzumy_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
-libzumy_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libzumy_common_a_SOURCES = \
+# common: shared between spoomyd, and spoomy-qt and non-server tools
+libspoomy_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
+libspoomy_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libspoomy_common_a_SOURCES = \
   amount.cpp \
   arith_uint256.cpp \
   base58.cpp \
@@ -350,9 +350,9 @@ libzumy_common_a_SOURCES = \
 # util: shared between all executables.
 # This library *must* be included to make sure that the glibc
 # backward-compatibility objects and their sanity checks are linked.
-libzumy_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
-libzumy_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libzumy_util_a_SOURCES = \
+libspoomy_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
+libspoomy_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libspoomy_util_a_SOURCES = \
   chainparamsbase.cpp \
   clientversion.cpp \
   compat/glibc_sanity.cpp \
@@ -371,30 +371,30 @@ libzumy_util_a_SOURCES = \
   $(ZUMY_CORE_H)
 
 if GLIBC_BACK_COMPAT
-libzumy_util_a_SOURCES += compat/glibc_compat.cpp
+libspoomy_util_a_SOURCES += compat/glibc_compat.cpp
 endif
 
 # cli: shared between spoomy-cli and spoomy-qt
-libzumy_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
-libzumy_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libzumy_cli_a_SOURCES = \
+libspoomy_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
+libspoomy_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libspoomy_cli_a_SOURCES = \
   rpcclient.cpp \
   $(ZUMY_CORE_H)
 
-nodist_libzumy_util_a_SOURCES = $(srcdir)/obj/build.h
+nodist_libspoomy_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# zumyd binary #
-zumyd_SOURCES = zumyd.cpp
-zumyd_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
-zumyd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-zumyd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# spoomyd binary #
+spoomyd_SOURCES = spoomyd.cpp
+spoomyd_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
+spoomyd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+spoomyd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-zumyd_SOURCES += zumyd-res.rc
+spoomyd_SOURCES += spoomyd-res.rc
 endif
 
-zumyd_LDADD = \
+spoomyd_LDADD = \
   $(LIBZUMY_SERVER) \
   $(LIBZUMY_COMMON) \
   $(LIBUNIVALUE) \
@@ -405,56 +405,56 @@ zumyd_LDADD = \
   $(LIBSECP256K1)
 
 if ENABLE_ZMQ
-zumyd_LDADD += $(LIBZUMY_ZMQ) $(ZMQ_LIBS)
+spoomyd_LDADD += $(LIBZUMY_ZMQ) $(ZMQ_LIBS)
 endif
 
 if ENABLE_WALLET
-zumyd_LDADD += libzumy_wallet.a
+spoomyd_LDADD += libspoomy_wallet.a
 endif
 
-zumyd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+spoomyd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
 
 # spoomy-cli binary #
-zumy_cli_SOURCES = spoomy-cli.cpp
-zumy_cli_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES) $(EVENT_CFLAGS)
-zumy_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-zumy_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+spoomy_cli_SOURCES = spoomy-cli.cpp
+spoomy_cli_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES) $(EVENT_CFLAGS)
+spoomy_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+spoomy_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-zumy_cli_SOURCES += spoomy-cli-res.rc
+spoomy_cli_SOURCES += spoomy-cli-res.rc
 endif
 
-zumy_cli_LDADD = \
+spoomy_cli_LDADD = \
   $(LIBZUMY_CLI) \
   $(LIBUNIVALUE) \
   $(LIBZUMY_UTIL)
-zumy_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+spoomy_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
 # spoomy-tx binary #
-zumy_tx_SOURCES = spoomy-tx.cpp
-zumy_tx_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
-zumy_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-zumy_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+spoomy_tx_SOURCES = spoomy-tx.cpp
+spoomy_tx_CPPFLAGS = $(AM_CPPFLAGS) $(ZUMY_INCLUDES)
+spoomy_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+spoomy_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-zumy_tx_SOURCES += spoomy-tx-res.rc
+spoomy_tx_SOURCES += spoomy-tx-res.rc
 endif
 
-zumy_tx_LDADD = \
+spoomy_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBZUMY_COMMON) \
   $(LIBZUMY_UTIL) \
   $(LIBZUMY_CRYPTO) \
   $(LIBSECP256K1)
 
-zumy_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+spoomy_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
-# zumyconsensus library #
+# spoomyconsensus library #
 if BUILD_ZUMY_LIBS
-include_HEADERS = script/zumyconsensus.h
-libzumyconsensus_la_SOURCES = \
+include_HEADERS = script/spoomyconsensus.h
+libspoomyconsensus_la_SOURCES = \
   crypto/hmac_sha512.cpp \
   crypto/ripemd160.cpp \
   crypto/sha1.cpp \
@@ -463,20 +463,20 @@ libzumyconsensus_la_SOURCES = \
   hash.cpp \
   primitives/transaction.cpp \
   pubkey.cpp \
-  script/zumyconsensus.cpp \
+  script/spoomyconsensus.cpp \
   script/interpreter.cpp \
   script/script.cpp \
   uint256.cpp \
   utilstrencodings.cpp
 
 if GLIBC_BACK_COMPAT
-  libzumyconsensus_la_SOURCES += compat/glibc_compat.cpp
+  libspoomyconsensus_la_SOURCES += compat/glibc_compat.cpp
 endif
 
-libzumyconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
-libzumyconsensus_la_LIBADD = $(LIBSECP256K1)
-libzumyconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_ZUMY_INTERNAL
-libzumyconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libspoomyconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
+libspoomyconsensus_la_LIBADD = $(LIBSECP256K1)
+libspoomyconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_ZUMY_INTERNAL
+libspoomyconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #

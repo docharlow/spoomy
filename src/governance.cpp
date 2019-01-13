@@ -1285,7 +1285,7 @@ void CGovernanceManager::UpdatedBlockTip(const CBlockIndex *pindex)
     // Note this gets called from ActivateBestChain without cs_main being held
     // so it should be safe to lock our mutex here without risking a deadlock
     // On the other hand it should be safe for us to access pindex without holding a lock
-    // on cs_main because the CBlockIndex objects are zumyally allocated and
+    // on cs_main because the CBlockIndex objects are spoomyally allocated and
     // presumably never deleted.
     if(!pindex) {
         return;
